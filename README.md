@@ -8,7 +8,7 @@ Internal recruitment tool for the ROVE HR team — manage candidates from resume
 - **MongoDB** — Mongoose ODM
 - **Tailwind CSS v4** — UI
 - **PDFKit** — offer letter & NDA generation
-- **Vercel Blob** — file storage in production
+- **GridFS** — resume & PDF storage in MongoDB Atlas
 
 ## Quick start
 

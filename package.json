@@ -13,11 +13,11 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@vercel/blob": "^2.6.1",
     "bcrypt": "^6.0.0",
     "date-fns": "^4.4.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.23.0",
+    "mongodb": "^7.2.0",
     "mongoose": "^9.7.4",
     "next": "16.2.10",
     "pdfkit": "^0.19.1",

@@ -11,7 +11,7 @@ export async function GET(
     const { id } = await params;
     const document = await files.getDocument(id);
 
-    if (!document || !files.fileExists(document.filePath)) {
+    if (!document || !(await files.fileExists(document.filePath))) {
       return new Response(JSON.stringify({ message: 'File not found' }), {
         status: 404,
         headers: { 'Content-Type': 'application/json' },

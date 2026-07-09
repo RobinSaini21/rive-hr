@@ -26,7 +26,8 @@ MONGODB_URI="mongodb+srv://..." pnpm db:seed
 | --- | --- |
 | `MONGODB_URI` | MongoDB Atlas connection string |
 | `JWT_SECRET` | Long random string |
-| `BLOB_READ_WRITE_TOKEN` | From Vercel → Storage → Blob |
+
+Resumes and generated PDFs are stored in MongoDB via GridFS — no separate blob storage needed.
 
 4. Deploy
 

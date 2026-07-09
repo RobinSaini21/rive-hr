@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@vercel/blob':
-        specifier: ^2.6.1
-        version: 2.6.1
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
@@ -23,6 +20,9 @@ importers:
       lucide-react:
         specifier: ^1.23.0
         version: 1.23.0(react@19.2.4)
+      mongodb:
+        specifier: ^7.2.0
+        version: 7.2.0
       mongoose:
         specifier: ^9.7.4
         version: 9.7.4

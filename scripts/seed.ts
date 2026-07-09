@@ -4,16 +4,17 @@ config({ path: '.env.local' });
 config();
 import * as bcrypt from 'bcrypt';
 import { addDays, subDays } from 'date-fns';
-import * as fs from 'fs';
-import * as path from 'path';
 import mongoose from 'mongoose';
 import PDFDocument from 'pdfkit';
+import { connectDb } from '../src/lib/server/db';
 import {
   CandidateStatus,
   DocumentType,
   InterviewStatus,
   InterviewType,
 } from '../src/lib/server/enums';
+import * as files from '../src/lib/server/files';
+import * as gridfs from '../src/lib/server/gridfs';
 import {
   Candidate,
   Interview,
@@ -22,9 +23,6 @@ import {
   TimelineEvent,
   User,
 } from '../src/lib/server/models';
-
-const MONGODB_URI =
-  process.env.MONGODB_URI ?? 'mongodb://127.0.0.1:27017/rove-hire';
 
 async function createPdf(title: string, lines: string[]): Promise<Buffer> {
   return new Promise((resolve, reject) => {
@@ -46,39 +44,28 @@ async function saveDocument(
   fileName: string,
   buffer: Buffer,
 ) {
-  const uploadDir = path.resolve(process.env.UPLOAD_DIR ?? './uploads');
-  const candidateDir = path.join(uploadDir, candidateId.toString());
-  fs.mkdirSync(candidateDir, { recursive: true });
-  const filePath = path.join(candidateDir, fileName);
-  fs.writeFileSync(filePath, buffer);
-
-  return StoredDocument.create({
-    candidateId,
+  await files.saveBuffer(
+    candidateId.toString(),
     type,
+    buffer,
     fileName,
-    filePath,
-    mimeType: 'application/pdf',
-    size: buffer.length,
-  });
+    'application/pdf',
+  );
 }
 
 async function main() {
-  await mongoose.connect(MONGODB_URI);
-
-  const uploadDir = path.resolve(process.env.UPLOAD_DIR ?? './uploads');
-  if (fs.existsSync(uploadDir)) {
-    fs.rmSync(uploadDir, { recursive: true, force: true });
-  }
-  fs.mkdirSync(uploadDir, { recursive: true });
+  await connectDb();
 
   await Promise.all([
     TimelineEvent.deleteMany({}),
-    StoredDocument.deleteMany({}),
     Interview.deleteMany({}),
     Candidate.deleteMany({}),
     JobOpening.deleteMany({}),
     User.deleteMany({}),
   ]);
+
+  await gridfs.dropBucket();
+  await StoredDocument.deleteMany({});
 
   const passwordHash = await bcrypt.hash('rovehire2026', 10);
   await User.create({

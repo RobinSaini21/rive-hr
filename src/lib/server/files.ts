@@ -1,15 +1,12 @@
-import { put } from '@vercel/blob';
 import * as fs from 'fs';
-import * as path from 'path';
 import { Types } from 'mongoose';
 import { connectDb } from './db';
 import { StoredDocument } from './models';
 import { DocumentType } from './enums';
+import * as gridfs from './gridfs';
 
-const useBlob = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
-
-function getUploadDir() {
-  return path.resolve(process.env.UPLOAD_DIR ?? './uploads');
+function isRemotePath(filePath: string) {
+  return filePath.startsWith('http://') || filePath.startsWith('https://');
 }
 
 async function persistBuffer(
@@ -18,20 +15,7 @@ async function persistBuffer(
   buffer: Buffer,
   mimeType: string,
 ) {
-  if (useBlob()) {
-    const blob = await put(`${candidateId}/${fileName}`, buffer, {
-      access: 'public',
-      contentType: mimeType,
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    });
-    return blob.url;
-  }
-
-  const candidateDir = path.join(getUploadDir(), candidateId);
-  fs.mkdirSync(candidateDir, { recursive: true });
-  const filePath = path.join(candidateDir, fileName);
-  fs.writeFileSync(filePath, buffer);
-  return filePath;
+  return gridfs.uploadBuffer(fileName, buffer, { candidateId, mimeType });
 }
 
 export async function saveFile(
@@ -91,16 +75,23 @@ export async function getDocument(id: string) {
   return doc ? toDto(doc) : null;
 }
 
-export function isRemotePath(filePath: string) {
-  return filePath.startsWith('http://') || filePath.startsWith('https://');
-}
+export async function fileExists(filePath: string) {
+  if (gridfs.isGridFsPath(filePath)) {
+    return gridfs.gridFsFileExists(filePath);
+  }
 
-export function fileExists(filePath: string) {
-  if (isRemotePath(filePath)) return true;
+  if (isRemotePath(filePath)) {
+    return true;
+  }
+
   return fs.existsSync(filePath);
 }
 
-export async function getFileBuffer(filePath: string): Promise<Buffer> {
+export async function getFileBuffer(filePath: string) {
+  if (gridfs.isGridFsPath(filePath)) {
+    return gridfs.downloadBuffer(filePath);
+  }
+
   if (!isRemotePath(filePath)) {
     return fs.readFileSync(filePath);
   }
