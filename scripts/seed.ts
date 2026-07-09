@@ -55,6 +55,9 @@ async function saveDocument(
 
 async function main() {
   await connectDb();
+  console.log(
+    `Connected to ${mongoose.connection.db?.databaseName} (${mongoose.connection.host})`,
+  );
 
   await Promise.all([
     TimelineEvent.deleteMany({}),
