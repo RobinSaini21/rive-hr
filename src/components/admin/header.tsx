@@ -20,11 +20,11 @@ export function Header() {
       </div>
 
       <div className="flex items-center gap-2">
-        <div className="flex items-center gap-3 rounded-lg border border-border bg-background py-1.5 pl-1.5 pr-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-xs font-semibold text-white">
+        <div className="flex h-10 items-center gap-3 rounded-lg border border-border bg-background pl-1.5 pr-3">
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-primary text-xs font-semibold text-white">
             {user?.name?.slice(0, 2).toUpperCase() ?? "HR"}
           </div>
-          <div className="hidden sm:block">
+          <div className="hidden sm:block leading-tight">
             <p className="text-sm font-medium leading-none">{user?.name ?? "HR Admin"}</p>
             <p className="mt-0.5 text-xs text-muted">{user?.email ?? "hr@rove.com"}</p>
           </div>
@@ -32,7 +32,7 @@ export function Header() {
         <button
           type="button"
           onClick={logout}
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-muted transition hover:text-danger"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-muted transition hover:text-danger"
           aria-label="Sign out"
         >
           <LogOut className="h-4 w-4" />

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:seed": "tsx --env-file=.env.local scripts/seed.ts"
+    "db:seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "db:clear-pdfs": "tsx --env-file=.env.local scripts/clear-pdfs.ts"
   },
   "engines": {
     "node": ">=20"
