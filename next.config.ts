@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  serverExternalPackages: ["pdfkit", "fontkit"],
+  outputFileTracingIncludes: {
+    "/api/**": ["./src/lib/server/pdf-fonts/**/*"],
+  },
 };
 
 export default nextConfig;

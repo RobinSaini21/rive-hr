@@ -1,5 +1,8 @@
 import PDFDocument from 'pdfkit';
 import { format } from 'date-fns';
+import { ensurePdfKitFonts } from './pdfkit-setup';
+
+ensurePdfKitFonts();
 
 type OfferLetterData = {
   candidateName: string;
