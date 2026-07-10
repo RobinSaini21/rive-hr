@@ -11,6 +11,7 @@ import {
   FileText,
 } from 'lucide-react';
 import { apiFetch, ApiError, downloadFile } from '@/lib/api';
+import { CandidateProfileSkeleton } from '@/components/ui/skeleton';
 import { StatusBadge } from '@/components/hire/status-badge';
 import type { Candidate, FeedbackRecommendation } from '@/lib/types';
 
@@ -48,7 +49,7 @@ export default function CandidateProfilePage() {
     setTimeout(() => setCopied(false), 2000);
   }
 
-  if (loading) return <div className="p-12 text-center text-sm text-muted">Loading profile...</div>;
+  if (loading) return <CandidateProfileSkeleton />;
   if (error || !candidate) return <div className="p-12 text-center text-sm text-danger">{error || 'Not found'}</div>;
 
   const canGenerateOffer = ['INTERVIEW_SCHEDULED', 'OFFER_SENT'].includes(candidate.status);

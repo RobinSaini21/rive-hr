@@ -26,6 +26,7 @@ MONGODB_URI="mongodb+srv://..." pnpm db:seed
 | --- | --- |
 | `MONGODB_URI` | MongoDB Atlas connection string |
 | `JWT_SECRET` | Long random string |
+| `WEB_URL` | `https://rive-hr.vercel.app` (used for magic application links) |
 
 Resumes and generated PDFs are stored in MongoDB via GridFS — no separate blob storage needed.
 
@@ -36,7 +37,7 @@ Resumes and generated PDFs are stored in MongoDB via GridFS — no separate blob
 - Sign in: `hr@rove.com` / `rovehire2026`
 - 5 seeded candidates visible in pipeline
 - Download offer PDFs for Chris Morgan
-- Test magic link: `https://YOUR-APP.vercel.app/apply/seed-token-applied`
+- Test magic link: `https://rive-hr.vercel.app/apply/seed-token-applied`
 
 ## Local development
 

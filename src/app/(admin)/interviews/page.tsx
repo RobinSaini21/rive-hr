@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { apiFetch } from '@/lib/api';
+import { InterviewsTableSkeleton } from '@/components/ui/skeleton';
 import { StatusBadge } from '@/components/hire/status-badge';
 import type { Interview } from '@/lib/types';
 
@@ -22,7 +23,7 @@ export default function InterviewsPage() {
 
       <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
         {loading ? (
-          <div className="p-12 text-center text-sm text-muted">Loading interviews...</div>
+          <InterviewsTableSkeleton />
         ) : interviews.length === 0 ? (
           <div className="p-12 text-center text-sm text-muted">No interviews scheduled yet.</div>
         ) : (

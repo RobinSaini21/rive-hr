@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { apiFetch } from '@/lib/api';
+import { JobsListSkeleton } from '@/components/ui/skeleton';
 import type { JobOpening } from '@/lib/types';
 
 export default function JobsPage() {
@@ -31,7 +32,7 @@ export default function JobsPage() {
 
       <div className="grid gap-4">
         {loading ? (
-          <p className="text-sm text-muted">Loading jobs...</p>
+          <JobsListSkeleton />
         ) : (
           jobs.map((job) => (
             <div

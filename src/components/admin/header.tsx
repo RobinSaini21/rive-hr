@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, ChevronDown, LogOut, Search } from "lucide-react";
+import { Bell, ChevronDown, LogOut } from "lucide-react";
 import { getPageTitle } from "@/lib/navigation";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/components/providers/auth-provider";
@@ -20,16 +20,6 @@ export function Header() {
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="relative hidden md:block">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
-          <input
-            type="search"
-            placeholder="Search pipeline..."
-            className="h-9 w-64 rounded-lg border border-border bg-background pl-9 pr-3 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
-            readOnly
-          />
-        </div>
-
         <button
           type="button"
           className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-muted transition hover:text-foreground"

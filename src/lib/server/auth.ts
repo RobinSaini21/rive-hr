@@ -77,7 +77,18 @@ export class HttpError extends Error {
 }
 
 export function getWebUrl() {
-  if (process.env.WEB_URL) return process.env.WEB_URL;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  const configured = process.env.WEB_URL?.replace(/\/$/, '');
+  if (configured) return configured;
+
+  const productionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL?.replace(/\/$/, '');
+  if (productionHost) {
+    return productionHost.startsWith('http')
+      ? productionHost
+      : `https://${productionHost}`;
+  }
+
+  const deploymentHost = process.env.VERCEL_URL?.replace(/\/$/, '');
+  if (deploymentHost) return `https://${deploymentHost}`;
+
   return 'http://localhost:3000';
 }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { CheckCircle2 } from 'lucide-react';
+import { ApplyFormSkeleton } from '@/components/ui/skeleton';
 import { apiFetch, ApiError } from '@/lib/api';
 
 type ApplyState =
@@ -71,7 +72,7 @@ export default function ApplyPage() {
   }
 
   if ('loading' in state && state.loading) {
-    return <Centered message="Loading application..." />;
+    return <ApplyFormSkeleton />;
   }
 
   if ('expired' in state && state.expired) {

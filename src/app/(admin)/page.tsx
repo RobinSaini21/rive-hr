@@ -7,6 +7,7 @@ import { Plus, Search } from 'lucide-react';
 import { apiFetch } from '@/lib/api';
 import { ALL_STATUSES, STATUS_LABELS } from '@/lib/status';
 import { StatusBadge } from '@/components/hire/status-badge';
+import { PipelineTableSkeleton } from '@/components/ui/skeleton';
 import type { CandidateListItem, CandidateStatus } from '@/lib/types';
 
 export default function PipelinePage() {
@@ -71,7 +72,7 @@ export default function PipelinePage() {
 
       <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
         {loading ? (
-          <div className="p-12 text-center text-sm text-muted">Loading pipeline...</div>
+          <PipelineTableSkeleton />
         ) : error ? (
           <div className="p-12 text-center text-sm text-danger">{error}</div>
         ) : candidates.length === 0 ? (
